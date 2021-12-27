@@ -1,31 +1,21 @@
-<script setup lang="ts">
-import Box from "./Box.vue";
-import "/node_modules/primeflex/primeflex.min.css";
-import "/node_modules/primeflex/themes/arya-blue.css";
-</script>
-
 <template>
   <header class="text-center p-3">
     <h1>This is a Tic Tac Toe!</h1>
   </header>
   <main id="ox_page_container">
-    <p>Current Player: {{}}</p>
+    <p>Current Player: {{ currentPlayer }}</p>
     <div class="text-center">
       <button class="restart">Reset</button>
     </div>
-    <!-- <div class="number_input flex justify-content-center">
-      <input
-        type="number"
-        min="1"
-        max="9"
-        placeholder="input 1-9"
-        id="inputValue"
-        class="w-8rem uppercase"
-      />
-      <input type="submit" value="submit" class="submit w-5rem uppercase" />
-    </div>-->
-
     <div class="ox_box_container flex flex-wrap w-full">
+      <Box />
+      <Box />
+      <Box />
+      <Box />
+      <Box />
+      <Box />
+      <Box />
+      <Box />
       <Box />
       <!-- <div class="ox_box col-4 border-1">
         <div
@@ -154,7 +144,24 @@ import "/node_modules/primeflex/themes/arya-blue.css";
         </div>
       </div>-->
     </div>
+    <div class="result">
+      <p>Winner is: {{ winner }}</p>
+    </div>
   </main>
 </template>
 
+<script setup lang="ts">
+import { ref, reactive } from 'vue';
+import Box from './Box.vue';
+import '/node_modules/primeflex/primeflex.min.css';
+import '/node_modules/primeflex/themes/arya-blue.css';
+
+export type TicTacToeProps = {
+  oddPlayer?: object;
+  evenPlayer?: object;
+}
+const currentPlayer = 'hello!'
+const winner = 'oddPlayer';
+
+</script>
 <style scoped></style>
