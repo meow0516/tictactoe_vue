@@ -26,8 +26,7 @@
 <script setup lang="ts">
 import { ref, reactive, computed } from 'vue';
 import Box from './Box.vue';
-import '/node_modules/primeflex/primeflex.min.css';
-import '/node_modules/primeflex/themes/arya-blue.css';
+
 
 export type TicTacToeProps = {
   oddPlayer?: object;
