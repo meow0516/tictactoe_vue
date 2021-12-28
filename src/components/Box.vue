@@ -5,32 +5,19 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
+import { defineProps, toRef } from 'vue';
+const props = defineProps<{
+  index: number
+}>()
+const index = toRef(props, 'index')
 
-defineProps<{ msg: string }>();
 
-const count = ref(0);
 function markBox() {
-  console.log('mark');
+  console.log(index.value)
 }
 </script>
 
-<template>
-  <div class="ox_box col-4 border-1">
-    <div
-      class="
-        inner_ox_box
-        flex
-        justify-content-center
-        align-items-center
-        h-6rem
-        text-4xl
-      "
-    ></div>
-  </div>
-</template>
 
-<style scoped></style>
 <style scoped>
 .ox_box:hover {
   background-color: rgb(130, 230, 230);

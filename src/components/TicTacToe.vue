@@ -8,7 +8,7 @@
       <button class="restart">Reset</button>
     </div>
     <div class="ox_box_container flex flex-wrap w-full">
-      <Box v-for="index in 9" :key="index" />
+      <Box :index="index" v-for="index in 9" :key="index" />
       <!-- <div class="ox_box col-4 border-1">
         <div
           class="
