@@ -24,7 +24,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, reactive } from 'vue';
+import { ref, reactive, computed } from 'vue';
 import Box from './Box.vue';
 import '/node_modules/primeflex/primeflex.min.css';
 import '/node_modules/primeflex/themes/arya-blue.css';
@@ -33,8 +33,6 @@ export type TicTacToeProps = {
   oddPlayer?: object;
   evenPlayer?: object;
 }
-const currentPlayer = 'hello!'
-const winner = 'oddPlayer';
 const winnerArray = [
   [1, 2, 3],
   [4, 5, 6],
@@ -45,7 +43,9 @@ const winnerArray = [
   [1, 5, 9],
   [3, 5, 7],
 ];
-
+const currentPlayer = computed(() => {
+  return isOddPlayerTurn.value ? players.odd.mark : players.even.mark
+})
 let winner = ref();
 let players = reactive({
   odd: {
