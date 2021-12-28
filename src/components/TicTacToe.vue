@@ -35,24 +35,59 @@ export type TicTacToeProps = {
 }
 const currentPlayer = 'hello!'
 const winner = 'oddPlayer';
+const winnerArray = [
+  [1, 2, 3],
+  [4, 5, 6],
+  [7, 8, 9],
+  [1, 4, 7],
+  [2, 5, 8],
+  [3, 6, 9],
+  [1, 5, 9],
+  [3, 5, 7],
+];
 
+let players = reactive({
+  odd: {
+    name: 'Odd',
+    chosenNumber: [],
+    mark: 'O',
+  },
+  even: {
+    name: 'Even',
+    chosenNumber: [],
+    mark: 'X',
+  },
+})
 let isOddPlayerTurn = ref(true);
 let usedNumber = reactive([])
 
-function checkBox(index) {
+function checkBox(index: number) {
   let isNumberUsed = usedNumber.includes(index)
   if (!isNumberUsed) {
+    if (isOddPlayerTurn.value) {
+      players.odd.chosenNumber.push(index)
+      checkWinner(players.odd.chosenNumber)
+    }
+    else {
+      players.even.chosenNumber.push(index)
+      checkWinner(players.even.chosenNumber)
+    }
     usedNumber.push(index)
-    players.odd.chosenNumber.push(index)
 
     isOddPlayerTurn.value = !isOddPlayerTurn.value
-    console.log('parents turn: ' + isOddPlayerTurn.value)
   }
   else {
     alert('this box has been choosed!')
   }
-
-
+}
+function checkWinner(chosenNumber: Array<number>) {
+  for (const arr of winnerArray) {
+    if (arr.every((value) => chosenNumber.includes(value))) {
+      alert(' win!');
+    }
+  }
 }
 </script>
+
+
 <style scoped></style>
