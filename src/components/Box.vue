@@ -12,6 +12,7 @@ const props = defineProps<{
   index: number
   usedNumber: Array<number>
   isOddPlayerTurn: boolean
+  currentPlayerMark: string
 }>()
 const index = toRef(props, 'index')
 let isOddPlayerTurn = toRef(props, 'isOddPlayerTurn')
@@ -19,14 +20,12 @@ let usedNumber = props.usedNumber
 let mark = ref()
 let isUsedBox = ref(false)
 
-
 function markBox() {
-  console.log(index.value)
   if (!usedNumber.includes(index.value)) {
     if (isOddPlayerTurn.value) {
-      mark.value = 'O'
+      mark.value = props.currentPlayerMark
     }
-    else mark.value = 'X'
+    else mark.value = props.currentPlayerMark
     isUsedBox.value = true;
   }
   // console.log('turn: ' + isOddPlayerTurn.value)
