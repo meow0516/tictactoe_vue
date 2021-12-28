@@ -1,5 +1,5 @@
 <template>
-  <div class="ox_box col-4 border-1" @click="markBox">
+  <div class="ox_box col-4 border-1" :class="{ used_box: isUsedBox }" @click="markBox">
     <div
       class="inner_ox_box flex justify-content-center align-items-center h-6rem text-4xl"
     >{{ mark }}</div>
@@ -17,6 +17,7 @@ const index = toRef(props, 'index')
 let isOddPlayerTurn = toRef(props, 'isOddPlayerTurn')
 let usedNumber = props.usedNumber
 let mark = ref()
+let isUsedBox = ref(false)
 
 
 function markBox() {
@@ -26,6 +27,7 @@ function markBox() {
       mark.value = 'O'
     }
     else mark.value = 'X'
+    isUsedBox.value = true;
   }
   // console.log('turn: ' + isOddPlayerTurn.value)
   // console.log('usednumber: ' + usedNumber)
@@ -42,6 +44,10 @@ function markBox() {
 .ox_box:hover {
   background-color: rgb(130, 230, 230);
   cursor: pointer;
+}
+.used_box:hover {
+  background-color: white;
+  cursor: default;
 }
 </style>
 
