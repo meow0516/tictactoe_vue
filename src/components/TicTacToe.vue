@@ -18,7 +18,7 @@
       />
     </div>
     <div class="result">
-      <p>Winner is: {{ winner }}</p>
+      <p v-show="isGameEnd">Winner is: {{ winner }}</p>
     </div>
   </main>
 </template>
@@ -46,6 +46,7 @@ const winnerArray = [
   [3, 5, 7],
 ];
 
+let winner = ref();
 let players = reactive({
   odd: {
     name: 'Odd',
@@ -60,17 +61,19 @@ let players = reactive({
 })
 let isOddPlayerTurn = ref(true);
 let usedNumber = reactive([])
+let isGameEnd = ref(false)
 
 function checkBox(index: number) {
   let isNumberUsed = usedNumber.includes(index)
   if (!isNumberUsed) {
     if (isOddPlayerTurn.value) {
       players.odd.chosenNumber.push(index)
-      checkWinner(players.odd.chosenNumber)
+      checkWinner(players.odd)
+
     }
     else {
       players.even.chosenNumber.push(index)
-      checkWinner(players.even.chosenNumber)
+      checkWinner(players.even)
     }
     usedNumber.push(index)
 
@@ -80,10 +83,11 @@ function checkBox(index: number) {
     alert('this box has been choosed!')
   }
 }
-function checkWinner(chosenNumber: Array<number>) {
+function checkWinner(currentPlayer: Players) {
   for (const arr of winnerArray) {
-    if (arr.every((value) => chosenNumber.includes(value))) {
-      alert(' win!');
+    if (arr.every((value) => currentPlayer.chosenNumber.includes(value))) {
+      winner.value = currentPlayer.name
+      isGameEnd.value = true;
     }
   }
 }
