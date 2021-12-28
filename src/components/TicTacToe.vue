@@ -8,133 +8,14 @@
       <button class="restart">Reset</button>
     </div>
     <div class="ox_box_container flex flex-wrap w-full">
-      <Box :index="index" v-for="index in 9" :key="index" />
-      <!-- <div class="ox_box col-4 border-1">
-        <div
-          class="
-            inner_ox_box
-            flex
-            justify-content-center
-            align-items-center
-            h-6rem
-            text-4xl
-          "
-        >
-          1
-        </div>
-      </div>
-      <div class="ox_box col-4 border-1">
-        <div
-          class="
-            inner_ox_box
-            flex
-            justify-content-center
-            align-items-center
-            h-6rem
-            text-4xl
-          "
-        >
-          2
-        </div>
-      </div>
-      <div class="ox_box col-4 border-1">
-        <div
-          class="
-            inner_ox_box
-            flex
-            justify-content-center
-            align-items-center
-            h-6rem
-            text-4xl
-          "
-        >
-          3
-        </div>
-      </div>
-      <div class="ox_box col-4 border-1">
-        <div
-          class="
-            inner_ox_box
-            flex
-            justify-content-center
-            align-items-center
-            h-6rem
-            text-4xl
-          "
-        >
-          4
-        </div>
-      </div>
-      <div class="ox_box col-4 border-1">
-        <div
-          class="
-            inner_ox_box
-            flex
-            justify-content-center
-            align-items-center
-            h-6rem
-            text-4xl
-          "
-        >
-          5
-        </div>
-      </div>
-      <div class="ox_box col-4 border-1">
-        <div
-          class="
-            inner_ox_box
-            flex
-            justify-content-center
-            align-items-center
-            h-6rem
-            text-4xl
-          "
-        >
-          6
-        </div>
-      </div>
-      <div class="ox_box col-4 border-1">
-        <div
-          class="
-            inner_ox_box
-            flex
-            justify-content-center
-            align-items-center
-            h-6rem
-            text-4xl
-          "
-        >
-          7
-        </div>
-      </div>
-      <div class="ox_box col-4 border-1">
-        <div
-          class="
-            inner_ox_box
-            flex
-            justify-content-center
-            align-items-center
-            h-6rem
-            text-4xl
-          "
-        >
-          8
-        </div>
-      </div>
-      <div class="ox_box col-4 border-1">
-        <div
-          class="
-            inner_ox_box
-            flex
-            justify-content-center
-            align-items-center
-            h-6rem
-            text-4xl
-          "
-        >
-          9
-        </div>
-      </div>-->
+      <Box
+        v-for="index in 9"
+        :key="index"
+        :index="index"
+        :isOddPlayerTurn="isOddPlayerTurn"
+        :usedNumber="usedNumber"
+        @click="checkBox(index)"
+      />
     </div>
     <div class="result">
       <p>Winner is: {{ winner }}</p>
@@ -155,5 +36,23 @@ export type TicTacToeProps = {
 const currentPlayer = 'hello!'
 const winner = 'oddPlayer';
 
+let isOddPlayerTurn = ref(true);
+let usedNumber = reactive([])
+
+function checkBox(index) {
+  let isNumberUsed = usedNumber.includes(index)
+  if (!isNumberUsed) {
+    usedNumber.push(index)
+    players.odd.chosenNumber.push(index)
+
+    isOddPlayerTurn.value = !isOddPlayerTurn.value
+    console.log('parents turn: ' + isOddPlayerTurn.value)
+  }
+  else {
+    alert('this box has been choosed!')
+  }
+
+
+}
 </script>
 <style scoped></style>
