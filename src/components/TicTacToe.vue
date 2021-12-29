@@ -66,7 +66,6 @@ let players = reactive({
   } as Players,
 })
 let isOddPlayerTurn = ref(true);
-let usedNumber = reactive([] as Array<number>)
 let isGameEnd = ref(false)
 let boxes = reactive(<Array<Box>>[{ mark: '', isUsed: false, color: undefined }, { mark: '', isUsed: false, color: undefined }, { mark: '', isUsed: false, color: undefined }, { mark: '', isUsed: false, color: undefined }, { mark: '', isUsed: false, color: undefined }, { mark: '', isUsed: false, color: undefined }, { mark: '', isUsed: false, color: undefined }, { mark: '', isUsed: false, color: undefined }, { mark: '', isUsed: false, color: undefined }])
 
@@ -75,25 +74,25 @@ function markBox(index: number) {
     return alert('The game is ended, please reset')
   }
 
-  let isNumberUsed = usedNumber.includes(index)
+  let isNumberUsed = boxes[index].isUsed
   if (isNumberUsed) {
     return alert('This box has been chosen!')
   }
 
-  usedNumber.push(index)
   if (isOddPlayerTurn.value) {
     boxes[index].mark = players.odd.mark
     boxes[index].color = players.odd.color
+    boxes[index].isUsed = true
     players.odd.chosenNumber.push(index + 1)
     checkWinner(players.odd)
   }
   else {
     boxes[index].mark = players.even.mark
     boxes[index].color = players.even.color
+    boxes[index].isUsed = true
     players.even.chosenNumber.push(index + 1)
     checkWinner(players.even)
   }
-  boxes[index].isUsed = true
   isOddPlayerTurn.value = !isOddPlayerTurn.value
 }
 
@@ -104,7 +103,7 @@ function checkWinner(currentPlayer: Players) {
       isGameEnd.value = true;
     }
     else {
-      if (usedNumber.length == 9) {
+      if (boxes.filter(box => box.isUsed).length === 9) {
         isGameEnd.value = true;
       }
     }
@@ -112,7 +111,6 @@ function checkWinner(currentPlayer: Players) {
 }
 function reset() {
   isOddPlayerTurn.value = true
-  usedNumber = []
   isGameEnd.value = false
   boxes.forEach(box => {
     box.mark = ""
