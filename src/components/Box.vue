@@ -2,6 +2,7 @@
   <div class="ox_box col-4 border-1" :class="{ used_box: isUsed }">
     <div
       class="inner_ox_box flex justify-content-center align-items-center h-6rem text-4xl"
+      :class="color"
     >{{ mark }}</div>
   </div>
 </template>
@@ -15,14 +16,17 @@ const props = defineProps<{
   currentPlayerMark: string
   mark: string
   isUsed: boolean
+  color?: string
 }>()
 export type box = {
   mark: string
   isUsed: boolean
+  color: string
 }
 const index = toRef(props, 'index')
 let mark = toRef(props, 'mark')
 let isUsed = toRef(props, 'isUsed')
+let color = toRef(props, 'color')
 
 </script>
 

@@ -17,6 +17,7 @@
         :currentPlayerMark="currentPlayer"
         :mark="boxes[index - 1].mark"
         :isUsed="boxes[index - 1].isUsed"
+        :color="boxes[index - 1].color"
         @click="markBox(index); checkBox(index)"
       />
     </div>
@@ -45,6 +46,7 @@ export type Players = {
 export type box = {
   mark: string
   isUsed: boolean
+  color?: string
 }
 const winnerArray = [
   [1, 2, 3],
@@ -65,12 +67,14 @@ let players = reactive({
     name: 'Odd',
     chosenNumber: [] as Array<number>,
     mark: 'O',
-  },
+    color: 'text-pink-500'
+  } as Players,
   even: {
     name: 'Even',
     chosenNumber: [] as Array<number>,
     mark: 'X',
-  },
+    color: 'text-cyan-500'
+  } as Players,
 })
 let isOddPlayerTurn = ref(true);
 let usedNumber = reactive([] as Array<number>)
@@ -85,9 +89,11 @@ function markBox(index: number) {
     if (!usedNumber.includes(index)) {
       if (isOddPlayerTurn.value) {
         boxes[index - 1].mark = players.odd.mark
+        boxes[index - 1]['color'] = players.odd.color
       }
       else {
         boxes[index - 1].mark = players.even.mark
+        boxes[index - 1]['color'] = players.even.color
       }
       boxes[index - 1].isUsed = true
     }
