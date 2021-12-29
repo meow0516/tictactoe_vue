@@ -39,7 +39,7 @@ export type Players = {
   mark: string
   color?: string;
 }
-export type box = {
+export type Box = {
   mark: string
   isUsed: boolean
   color?: string
@@ -75,7 +75,7 @@ let players = reactive({
 let isOddPlayerTurn = ref(true);
 let usedNumber = reactive([] as Array<number>)
 let isGameEnd = ref(false)
-let boxes = reactive([{ mark: '', isUsed: false }, { mark: '', isUsed: false }, { mark: '', isUsed: false }, { mark: '', isUsed: false }, { mark: '', isUsed: false }, { mark: '', isUsed: false }, { mark: '', isUsed: false }, { mark: '', isUsed: false }, { mark: '', isUsed: false }] as Array<box>)
+let boxes = reactive(<Array<Box>>[{ mark: '', isUsed: false }, { mark: '', isUsed: false }, { mark: '', isUsed: false }, { mark: '', isUsed: false }, { mark: '', isUsed: false }, { mark: '', isUsed: false }, { mark: '', isUsed: false }, { mark: '', isUsed: false }, { mark: '', isUsed: false }])
 
 function markBox(index: number) {
   if (isGameEnd.value) {
@@ -90,13 +90,13 @@ function markBox(index: number) {
   usedNumber.push(index)
   if (isOddPlayerTurn.value) {
     boxes[index - 1].mark = players.odd.mark
-    boxes[index - 1]['color'] = players.odd.color
+    boxes[index - 1].color = players.odd.color
     players.odd.chosenNumber.push(index)
     checkWinner(players.odd)
   }
   else {
     boxes[index - 1].mark = players.even.mark
-    boxes[index - 1]['color'] = players.even.color
+    boxes[index - 1].color = players.even.color
     players.even.chosenNumber.push(index)
     checkWinner(players.even)
   }

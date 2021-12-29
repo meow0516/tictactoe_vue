@@ -14,10 +14,10 @@ const props = defineProps<{
   isUsed: boolean
   color?: string
 }>()
-export type box = {
+export type Box = {
   mark: string
   isUsed: boolean
-  color: string
+  color?: string
 }
 let mark = toRef(props, 'mark')
 let isUsed = toRef(props, 'isUsed')
