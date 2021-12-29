@@ -3,7 +3,7 @@
     <h1>This is a Tic Tac Toe!</h1>
   </header>
   <main id="ox_page_container">
-    <p>Current Player: {{ currentPlayer }}</p>
+    <p>Current Player: {{ currentPlayerMark }}</p>
     <div class="text-center">
       <button class="restart" @click="reset">Reset</button>
     </div>
@@ -54,7 +54,7 @@ const winnerArray = [
   [1, 5, 9],
   [3, 5, 7],
 ];
-const currentPlayer = computed(() => {
+const currentPlayerMark = computed(() => {
   return isOddPlayerTurn.value ? players.odd.mark : players.even.mark
 })
 let winner = ref('');
