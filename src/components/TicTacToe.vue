@@ -78,14 +78,19 @@ let isGameEnd = ref(false)
 let boxes = reactive([{ mark: '', isUsed: false }, { mark: '', isUsed: false }, { mark: '', isUsed: false }, { mark: '', isUsed: false }, { mark: '', isUsed: false }, { mark: '', isUsed: false }, { mark: '', isUsed: false }, { mark: '', isUsed: false }, { mark: '', isUsed: false }] as Array<box>)
 
 function markBox(index: number) {
-  if (!usedNumber.includes(index)) {
-    if (isOddPlayerTurn.value) {
-      boxes[index - 1].mark = players.odd.mark
+  if (isGameEnd.value) {
+    alert('the game is ended')
+  }
+  else {
+    if (!usedNumber.includes(index)) {
+      if (isOddPlayerTurn.value) {
+        boxes[index - 1].mark = players.odd.mark
+      }
+      else {
+        boxes[index - 1].mark = players.even.mark
+      }
+      boxes[index - 1].isUsed = true
     }
-    else {
-      boxes[index - 1].mark = players.even.mark
-    }
-    boxes[index - 1].isUsed = true
   }
 }
 
