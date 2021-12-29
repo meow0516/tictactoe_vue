@@ -14,7 +14,7 @@
         :mark="boxes[index - 1].mark"
         :isUsed="boxes[index - 1].isUsed"
         :color="boxes[index - 1].color"
-        @click="markBox(index); checkBox(index)"
+        @click="markBox(index)"
       />
     </div>
     <div class="result">
@@ -79,42 +79,31 @@ let boxes = reactive([{ mark: '', isUsed: false }, { mark: '', isUsed: false }, 
 
 function markBox(index: number) {
   if (isGameEnd.value) {
-    alert('the game is ended')
+    return alert('The game is ended, please reset')
+  }
+
+  let isNumberUsed = usedNumber.includes(index)
+  if (isNumberUsed) {
+    return alert('This box has been chosen!')
+  }
+
+  usedNumber.push(index)
+  if (isOddPlayerTurn.value) {
+    boxes[index - 1].mark = players.odd.mark
+    boxes[index - 1]['color'] = players.odd.color
+    players.odd.chosenNumber.push(index)
+    checkWinner(players.odd)
   }
   else {
-    if (!usedNumber.includes(index)) {
-      if (isOddPlayerTurn.value) {
-        boxes[index - 1].mark = players.odd.mark
-        boxes[index - 1]['color'] = players.odd.color
-      }
-      else {
-        boxes[index - 1].mark = players.even.mark
-        boxes[index - 1]['color'] = players.even.color
-      }
-      boxes[index - 1].isUsed = true
-    }
+    boxes[index - 1].mark = players.even.mark
+    boxes[index - 1]['color'] = players.even.color
+    players.even.chosenNumber.push(index)
+    checkWinner(players.even)
   }
+  boxes[index - 1].isUsed = true
+  isOddPlayerTurn.value = !isOddPlayerTurn.value
 }
 
-function checkBox(index: number) {
-  let isNumberUsed = usedNumber.includes(index)
-  if (!isNumberUsed) {
-    if (isOddPlayerTurn.value) {
-      players.odd.chosenNumber.push(index)
-      usedNumber.push(index)
-      checkWinner(players.odd)
-    }
-    else {
-      usedNumber.push(index)
-      players.even.chosenNumber.push(index)
-      checkWinner(players.even)
-    }
-    isOddPlayerTurn.value = !isOddPlayerTurn.value
-  }
-  else {
-    alert('this box has been choosed!')
-  }
-}
 function checkWinner(currentPlayer: Players) {
   for (const arr of winnerArray) {
     if (arr.every((value) => currentPlayer.chosenNumber.includes(value))) {
