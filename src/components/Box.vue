@@ -8,20 +8,17 @@
 </template>
 
 <script setup lang="ts">
-import { defineProps, toRef, ref } from 'vue';
+import { defineProps, toRef, toRefs } from 'vue';
 const props = defineProps<{
-  mark: string
-  isUsed: boolean
-  color?: string
+  box: Box
 }>()
 export type Box = {
   mark: string
   isUsed: boolean
   color?: string
 }
-let mark = toRef(props, 'mark')
-let isUsed = toRef(props, 'isUsed')
-let color = toRef(props, 'color')
+let box = toRef(props, 'box')
+let { mark, isUsed, color } = toRefs(box.value)
 
 </script>
 

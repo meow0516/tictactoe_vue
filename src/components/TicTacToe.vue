@@ -8,14 +8,7 @@
       <button class="restart" @click="reset">Reset</button>
     </div>
     <div class="ox_box_container flex flex-wrap w-full">
-      <Box
-        v-for="index in 9"
-        :key="index"
-        :mark="boxes[index - 1].mark"
-        :isUsed="boxes[index - 1].isUsed"
-        :color="boxes[index - 1].color"
-        @click="markBox(index)"
-      />
+      <Box v-for="(box,index) in boxes" :key="index" :box="box" @click="markBox(index)" />
     </div>
     <div class="result">
       <p v-if="isGameEnd && winner.length > 0">Winner is: {{ winner }}</p>
@@ -75,7 +68,7 @@ let players = reactive({
 let isOddPlayerTurn = ref(true);
 let usedNumber = reactive([] as Array<number>)
 let isGameEnd = ref(false)
-let boxes = reactive(<Array<Box>>[{ mark: '', isUsed: false }, { mark: '', isUsed: false }, { mark: '', isUsed: false }, { mark: '', isUsed: false }, { mark: '', isUsed: false }, { mark: '', isUsed: false }, { mark: '', isUsed: false }, { mark: '', isUsed: false }, { mark: '', isUsed: false }])
+let boxes = reactive(<Array<Box>>[{ mark: '', isUsed: false, color: undefined }, { mark: '', isUsed: false, color: undefined }, { mark: '', isUsed: false, color: undefined }, { mark: '', isUsed: false, color: undefined }, { mark: '', isUsed: false, color: undefined }, { mark: '', isUsed: false, color: undefined }, { mark: '', isUsed: false, color: undefined }, { mark: '', isUsed: false, color: undefined }, { mark: '', isUsed: false, color: undefined }])
 
 function markBox(index: number) {
   if (isGameEnd.value) {
@@ -89,18 +82,18 @@ function markBox(index: number) {
 
   usedNumber.push(index)
   if (isOddPlayerTurn.value) {
-    boxes[index - 1].mark = players.odd.mark
-    boxes[index - 1].color = players.odd.color
-    players.odd.chosenNumber.push(index)
+    boxes[index].mark = players.odd.mark
+    boxes[index].color = players.odd.color
+    players.odd.chosenNumber.push(index + 1)
     checkWinner(players.odd)
   }
   else {
-    boxes[index - 1].mark = players.even.mark
-    boxes[index - 1].color = players.even.color
-    players.even.chosenNumber.push(index)
+    boxes[index].mark = players.even.mark
+    boxes[index].color = players.even.color
+    players.even.chosenNumber.push(index + 1)
     checkWinner(players.even)
   }
-  boxes[index - 1].isUsed = true
+  boxes[index].isUsed = true
   isOddPlayerTurn.value = !isOddPlayerTurn.value
 }
 
