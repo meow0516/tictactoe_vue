@@ -58,21 +58,21 @@ const winnerArray = [
 const currentPlayer = computed(() => {
   return isOddPlayerTurn.value ? players.odd.mark : players.even.mark
 })
-let winner = ref();
+let winner = ref('');
 let players = reactive({
   odd: {
     name: 'Odd',
-    chosenNumber: [],
+    chosenNumber: [] as Array<number>,
     mark: 'O',
   },
   even: {
     name: 'Even',
-    chosenNumber: [],
+    chosenNumber: [] as Array<number>,
     mark: 'X',
   },
 })
 let isOddPlayerTurn = ref(true);
-let usedNumber = reactive([])
+let usedNumber = reactive([] as Array<number>)
 let isGameEnd = ref(false)
 let boxes = reactive([{ mark: '', isUsed: false }, { mark: '', isUsed: false }, { mark: '', isUsed: false }, { mark: '', isUsed: false }, { mark: '', isUsed: false }, { mark: '', isUsed: false }, { mark: '', isUsed: false }, { mark: '', isUsed: false }, { mark: '', isUsed: false }] as Array<box>)
 
