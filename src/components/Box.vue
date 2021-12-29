@@ -10,10 +10,6 @@
 <script setup lang="ts">
 import { defineProps, toRef, ref } from 'vue';
 const props = defineProps<{
-  index: number
-  usedNumber: Array<number>
-  isOddPlayerTurn: boolean
-  currentPlayerMark: string
   mark: string
   isUsed: boolean
   color?: string
@@ -23,7 +19,6 @@ export type box = {
   isUsed: boolean
   color: string
 }
-const index = toRef(props, 'index')
 let mark = toRef(props, 'mark')
 let isUsed = toRef(props, 'isUsed')
 let color = toRef(props, 'color')

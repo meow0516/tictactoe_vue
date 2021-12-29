@@ -11,10 +11,6 @@
       <Box
         v-for="index in 9"
         :key="index"
-        :index="index"
-        :isOddPlayerTurn="isOddPlayerTurn"
-        :usedNumber="usedNumber"
-        :currentPlayerMark="currentPlayer"
         :mark="boxes[index - 1].mark"
         :isUsed="boxes[index - 1].isUsed"
         :color="boxes[index - 1].color"
