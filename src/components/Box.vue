@@ -1,5 +1,5 @@
 <template>
-  <div class="ox_box col-4 border-1" :class="{ used_box: isUsedBox }" @click="markBox">
+  <div class="ox_box col-4 border-1" :class="{ used_box: isUsed }">
     <div
       class="inner_ox_box flex justify-content-center align-items-center h-6rem text-4xl"
     >{{ mark }}</div>
@@ -7,34 +7,22 @@
 </template>
 
 <script setup lang="ts">
-import { defineProps, defineEmits, toRef, ref } from 'vue';
+import { defineProps, toRef, ref } from 'vue';
 const props = defineProps<{
   index: number
   usedNumber: Array<number>
   isOddPlayerTurn: boolean
   currentPlayerMark: string
+  mark: string
+  isUsed: boolean
 }>()
-const index = toRef(props, 'index')
-let isOddPlayerTurn = toRef(props, 'isOddPlayerTurn')
-let usedNumber = props.usedNumber
-let mark = ref()
-let isUsedBox = ref(false)
-
-function markBox() {
-  if (!usedNumber.includes(index.value)) {
-    if (isOddPlayerTurn.value) {
-      mark.value = props.currentPlayerMark
-    }
-    else mark.value = props.currentPlayerMark
-    isUsedBox.value = true;
-  }
-  // console.log('turn: ' + isOddPlayerTurn.value)
-  // console.log('usednumber: ' + usedNumber)
-  // emit('myClick', index.value);
-  // hasn't choosed -> mark box, don't change background color
-  // already choosed -> unable to mark box
+export type box = {
+  mark: string
+  isUsed: boolean
 }
-
+const index = toRef(props, 'index')
+let mark = toRef(props, 'mark')
+let isUsed = toRef(props, 'isUsed')
 
 </script>
 

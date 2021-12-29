@@ -14,7 +14,10 @@
         :index="index"
         :isOddPlayerTurn="isOddPlayerTurn"
         :usedNumber="usedNumber"
-        @click="checkBox(index)"
+        :currentPlayerMark="currentPlayer"
+        :mark="boxes[index - 1].mark"
+        :isUsed="boxes[index - 1].isUsed"
+        @click="markBox(index); checkBox(index)"
       />
     </div>
     <div class="result">
@@ -31,6 +34,16 @@ import Box from './Box.vue';
 export type TicTacToeProps = {
   oddPlayer?: object;
   evenPlayer?: object;
+}
+export type Players = {
+  name: string
+  chosenNumber: Array<number>
+  mark: string
+  color?: string;
+}
+export type box = {
+  mark: string
+  isUsed: boolean
 }
 const winnerArray = [
   [1, 2, 3],
@@ -61,6 +74,19 @@ let players = reactive({
 let isOddPlayerTurn = ref(true);
 let usedNumber = reactive([])
 let isGameEnd = ref(false)
+let boxes = reactive([{ mark: '', isUsed: false }, { mark: '', isUsed: false }, { mark: '', isUsed: false }, { mark: '', isUsed: false }, { mark: '', isUsed: false }, { mark: '', isUsed: false }, { mark: '', isUsed: false }, { mark: '', isUsed: false }, { mark: '', isUsed: false }] as Array<box>)
+
+function markBox(index: number) {
+  if (!usedNumber.includes(index)) {
+    if (isOddPlayerTurn.value) {
+      boxes[index - 1].mark = players.odd.mark
+    }
+    else {
+      boxes[index - 1].mark = players.even.mark
+    }
+    boxes[index - 1].isUsed = true
+  }
+}
 
 function checkBox(index: number) {
   let isNumberUsed = usedNumber.includes(index)
