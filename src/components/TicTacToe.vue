@@ -5,7 +5,7 @@
   <main id="ox_page_container">
     <p>Current Player: {{ currentPlayer }}</p>
     <div class="text-center">
-      <button class="restart">Reset</button>
+      <button class="restart" @click="reset">Reset</button>
     </div>
     <div class="ox_box_container flex flex-wrap w-full">
       <Box
@@ -121,6 +121,14 @@ function checkWinner(currentPlayer: Players) {
     isGameEnd.value = true
   }
 }
+function reset() {
+  isOddPlayerTurn.value = true
+  usedNumber = []
+  isGameEnd.value = false
+  boxes.forEach(box => {
+    box.mark = ""
+    box.isUsed = false
+  });
 }
 </script>
 
