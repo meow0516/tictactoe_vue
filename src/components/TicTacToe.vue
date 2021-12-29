@@ -21,7 +21,7 @@
       />
     </div>
     <div class="result">
-      <p v-if="isGameEnd && usedNumber.length < 8">Winner is: {{ winner }}</p>
+      <p v-if="isGameEnd && winner.length > 0">Winner is: {{ winner }}</p>
       <p v-else-if="isGameEnd">Draw</p>
     </div>
   </main>
@@ -94,14 +94,14 @@ function checkBox(index: number) {
   if (!isNumberUsed) {
     if (isOddPlayerTurn.value) {
       players.odd.chosenNumber.push(index)
+      usedNumber.push(index)
       checkWinner(players.odd)
-
     }
     else {
+      usedNumber.push(index)
       players.even.chosenNumber.push(index)
       checkWinner(players.even)
     }
-    usedNumber.push(index)
     isOddPlayerTurn.value = !isOddPlayerTurn.value
   }
   else {
@@ -109,16 +109,16 @@ function checkBox(index: number) {
   }
 }
 function checkWinner(currentPlayer: Players) {
-  if (usedNumber.length < 8) {
-    for (const arr of winnerArray) {
-      if (arr.every((value) => currentPlayer.chosenNumber.includes(value))) {
-        winner.value = currentPlayer.name
+  for (const arr of winnerArray) {
+    if (arr.every((value) => currentPlayer.chosenNumber.includes(value))) {
+      winner.value = currentPlayer.name
+      isGameEnd.value = true;
+    }
+    else {
+      if (usedNumber.length == 9) {
         isGameEnd.value = true;
       }
     }
-  }
-  else {
-    isGameEnd.value = true
   }
 }
 function reset() {
@@ -129,6 +129,9 @@ function reset() {
     box.mark = ""
     box.isUsed = false
   });
+  winner.value = ''
+  players.odd.chosenNumber = []
+  players.even.chosenNumber = []
 }
 </script>
 
