@@ -3,7 +3,7 @@
     <h1>This is a Tic Tac Toe!</h1>
   </header>
   <main id="ox_page_container">
-    <p>Current Player: {{ currentPlayerMark }}</p>
+    <p>Current Player: {{ currentPlayer.mark }}</p>
     <div class="text-center">
       <button class="restart" @click="reset">Reset</button>
     </div>
@@ -47,8 +47,8 @@ const winnerArray = [
   [1, 5, 9],
   [3, 5, 7],
 ];
-const currentPlayerMark = computed(() => {
-  return isOddPlayerTurn.value ? players.odd.mark : players.even.mark
+const currentPlayer = computed(() => {
+  return isOddPlayerTurn.value ? players.odd : players.even
 })
 let winner = ref('');
 let players = reactive({
@@ -79,20 +79,14 @@ function markBox(index: number) {
     return alert('This box has been chosen!')
   }
 
+  Object.assign(boxes[index], currentPlayer.value, { isUsed: true })
   if (isOddPlayerTurn.value) {
-    boxes[index].mark = players.odd.mark
-    boxes[index].color = players.odd.color
-    boxes[index].isUsed = true
     players.odd.chosenNumber.push(index + 1)
-    checkWinner(players.odd)
   }
   else {
-    boxes[index].mark = players.even.mark
-    boxes[index].color = players.even.color
-    boxes[index].isUsed = true
     players.even.chosenNumber.push(index + 1)
-    checkWinner(players.even)
   }
+  checkWinner(currentPlayer.value)
   isOddPlayerTurn.value = !isOddPlayerTurn.value
 }
 
@@ -120,6 +114,9 @@ function reset() {
   players.odd.chosenNumber = []
   players.even.chosenNumber = []
 }
+
+
+
 </script>
 
 
